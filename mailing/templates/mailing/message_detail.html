@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'mailing/base.html' %}
+
+{% block title %}Сообщение{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div>
+          <h3 class="mb-4">Тема</h3>
+          <p>{{ message.topic }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Содержание</h3>
+          <p>{{ message.content }}</p>
+          <hr class="my-4">
+        </div>
+        <a href="{% url 'mailing:message_edit' message.pk %}" class="btn btn-secondary">Редактировать</a>
+        <a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'mailing:message_list' %}" class="btn btn-primary">Вернуться к списку</a>
+    </div>
+{% endblock %}

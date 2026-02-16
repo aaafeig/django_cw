@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'mailing/base.html' %}
+
+{% block title %}Все получатели{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Список получателей</h1>
+        <a href="{% url 'mailing:create_recipient' %}" class="btn btn-primary mb-3">Добавить нового получателя</a>
+        <ul class="list-group">
+            {% for recipient in recipients %}
+                <li class="list-group-item">
+                    <a href="{% url 'mailing:recipient_detail' recipient.pk %}">{{ recipient.fullname }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

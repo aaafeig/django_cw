@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'mailing/base.html' %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h3 class="mb-4">Моя статистика</h3>
+        
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Рассылки</h5>
+                <p>Всего: {{ total_mailings }}<br>
+                   Активных: {{ active_mailings }}<br>
+                   Завершенных: {{ finished_mailings }}
+                </p>
+            </div>
+        </div>
+        
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>Отправки</h5>
+                <p>Попыток: {{ total_attempts }}<br>
+                   Успешно: {{ successful_attempts }}<br>
+                   Неуспешно: {{ failed_attempts }}
+                </p>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5>Результаты</h5>
+                <p>Отправлено сообщений: {{ total_messages_sent }}</p>
+                {% if total_attempts > 0 %}
+                    {% widthratio successful_attempts total_attempts 100 as success_percent %}
+                    <p>Успех: {{ success_percent }}%</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
