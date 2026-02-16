@@ -1,0 +1,17 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <h3 class="mb-4">Мой никнейм</h3>
+                {{ form.username }}
+                <hr class="my-4">
+            </div>
+            <button type="submit" class="btn btn-secondary">Сохранить</button>
+        </form>
+    </div>
+{% endblock %}
