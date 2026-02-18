@@ -1,0 +1,73 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Рассылка{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div>
+          <h3 class="mb-4">Дата начала рассылки</h3>
+          <p>{{ mailing.start_time|date:"d.m.Y H:i" }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Дата окончания рассылки</h3>
+          <p>{{ mailing.end_time|date:"d.m.Y H:i" }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Статус</h3>
+          <p>{{ mailing.get_status_display }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Сообщение</h3>
+          <p><strong>Тема:</strong> {{ mailing.message.topic }}</p>
+          <p><strong>Содержание:</strong> {{ mailing.message.content }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Получатели</h3>
+          <ul>
+            {% for recipient in mailing.recipients.all %}
+              <li>{{ recipient.fullname }} ({{ recipient.email }})</li>
+            {% empty %}
+              <li>Нет получателей</li>
+            {% endfor %}
+          </ul>
+          <hr class="my-4">
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'mailing:mailing_edit' mailing.pk %}" class="btn btn-secondary">Редактировать</a>
+            <a href="{% url 'mailing:mailing_delete' mailing.pk %}" class="btn btn-danger">Удалить</a>
+            <a href="{% url 'mailing:mailings_list' %}" class="btn btn-primary">Вернуться к списку</a>
+            <form method="post" action="{% url 'mailing:mailing_send' mailing.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Отправить сейчас</button>
+            </form>
+            {% if is_manager %}
+                {% if mailing.status == "Запущена" or mailing.status == "Создана" %}
+                    <form method="post" action="{% url 'mailing:toggle_mailing_active' mailing.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-warning">
+                            {% if mailing.status == "Запущена" %}Отключить{% else %}Включить{% endif %}
+                        </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="mt-4">
+            <h5>Последние отправки:</h5>
+            {% if mailing.logs.all %}
+                {% for log in mailing.logs.all %}
+                    <div>
+                        <small>{{ log.attempt_time|date:"H:i" }}</small>
+                        <p>{{ log.get_status_display }}</p>
+                    </div>
+                {% endfor %}
+                <small class="text-muted">Всего: {{ mailing.logs.count }} записей</small>
+            {% else %}
+                <p class="text-muted">Нет записей</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header py-3 bg-primary text-white">
+                        <h4 class="my-0">Все рассылки</h4>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h1 class="card-title display-4">{{ total_mailings }}</h1>
+                        <p class="card-text flex-grow-1">Всего созданных рассылок в системе</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header py-3 bg-success text-white">
+                        <h4 class="my-0">Активные</h4>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h1 class="card-title display-4">{{ active_mailings }}</h1>
+                        <p class="card-text flex-grow-1">
+                            Статус: <span class="badge bg-success">Запущена</span><br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header py-3 bg-info text-white">
+                        <h4 class="my-0">Получатели</h4>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h1 class="card-title display-4">{{ unique_recipients }}</h1>
+                        <p class="card-text flex-grow-1">Уникальных получателей в системе</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

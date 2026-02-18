@@ -1,0 +1,26 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Информация о получателе{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div>
+          <h3 class="mb-4">ФИО</h3>
+          <p>{{ recipient.fullname }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Email</h3>
+          <p>{{ recipient.email }}</p>
+          <hr class="my-4">
+        </div>
+        <div>
+          <h3 class="mb-4">Текст</h3>
+          <p>{{ recipient.comment }}</p>
+          <hr class="my-4">
+        </div>
+        <a href="{% url 'mailing:recipient_edit' recipient.pk %}" class="btn btn-secondary">Редактировать</a>
+        <a href="{% url 'mailing:recipient_delete' recipient.pk %}" class="btn btn-danger">Удалить</a>
+        <a href="{% url 'mailing:recipient_list' %}" class="btn btn-primary">Вернуться к списку</a>
+    </div>
+{% endblock %}

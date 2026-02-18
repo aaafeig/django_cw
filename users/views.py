@@ -10,8 +10,13 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 
-from users.forms import CustomUserCreationForm, CustomAuthenticationForm, CustomPasswordResetForm, \
-    CustomSetPasswordForm, ProfileUpdateForm
+from users.forms import (
+    CustomUserCreationForm,
+    CustomAuthenticationForm,
+    CustomPasswordResetForm,
+    CustomSetPasswordForm,
+    ProfileUpdateForm,
+)
 from users.models import CustomUser
 
 
@@ -68,7 +73,8 @@ class LoginView(FormView):
         if not user.email_verified:
             messages.error(
                 self.request,
-                "Подтвердите ваш email для входа в систему. " "Проверьте вашу почту или запросите новое письмо.",
+                "Подтвердите ваш email для входа в систему. "
+                "Проверьте вашу почту или запросите новое письмо.",
             )
             return redirect("users:login")
 

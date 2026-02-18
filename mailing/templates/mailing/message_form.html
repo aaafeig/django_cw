@@ -1,0 +1,12 @@
+{% extends 'mailing/base.html' %}
+
+{% block title %}Добавление сообщения{% endblock %}
+
+{% block content %}
+    <h2>{{ view.title }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Отображение полей формы -->
+        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
+    </form>
+{% endblock %}
