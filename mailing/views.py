@@ -287,7 +287,9 @@ def home_view(request):
         is_manager = request.user.groups.filter(name="Manager").exists()
 
     total_mailings = Mailings.objects.count()
-    active_mailings = Mailings.objects.filter(status=Mailings.STARTED, start_time__lte=now, end_time__gte=now).count()
+    active_mailings = Mailings.objects.filter(
+        status=Mailings.STARTED, start_time__lte=now, end_time__gte=now
+    ).count()
     unique_recipients = Recipient.objects.distinct().count()
 
     context = {

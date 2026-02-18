@@ -65,10 +65,18 @@ class MailingLog(models.Model):
         related_name="logs",
         verbose_name="Рассылка",
     )
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус попытки")
-    error_message = models.TextField(blank=True, null=True, verbose_name="Сообщение об ошибке")
-    attempt_time = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время попытки")
-    server_response = models.TextField(blank=True, null=True, verbose_name="Ответ почтового сервера")
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, verbose_name="Статус попытки"
+    )
+    error_message = models.TextField(
+        blank=True, null=True, verbose_name="Сообщение об ошибке"
+    )
+    attempt_time = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата и время попытки"
+    )
+    server_response = models.TextField(
+        blank=True, null=True, verbose_name="Ответ почтового сервера"
+    )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -105,8 +113,12 @@ class Mailings(models.Model):
         (FINISHED, "Завершена"),
     ]
 
-    start_time = models.DateTimeField(null=False, blank=False, verbose_name="Дата и время начала отправки")
-    end_time = models.DateTimeField(null=False, blank=False, verbose_name="Дата и время окончания отправки")
+    start_time = models.DateTimeField(
+        null=False, blank=False, verbose_name="Дата и время начала отправки"
+    )
+    end_time = models.DateTimeField(
+        null=False, blank=False, verbose_name="Дата и время окончания отправки"
+    )
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -119,7 +131,9 @@ class Mailings(models.Model):
         related_name="mailings",
         verbose_name="Сообщение",
     )
-    recipients = models.ManyToManyField(Recipient, related_name="mailings", verbose_name="Получатели")
+    recipients = models.ManyToManyField(
+        Recipient, related_name="mailings", verbose_name="Получатели"
+    )
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -127,7 +141,9 @@ class Mailings(models.Model):
         verbose_name="Владелец",
         blank=True,
     )
-    manually_controlled = models.BooleanField(default=False, verbose_name="Ручное управление")
+    manually_controlled = models.BooleanField(
+        default=False, verbose_name="Ручное управление"
+    )
 
     def __str__(self):
         return f"Дата: {self.start_time} Получатель:{self.recipients}"

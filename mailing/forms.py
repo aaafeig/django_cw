@@ -11,9 +11,13 @@ class RecipientForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RecipientForm, self).__init__(*args, **kwargs)
 
-        self.fields["email"].widget.attrs.update({"class": "form-control", "placeholder": "Введите email получателя"})
+        self.fields["email"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите email получателя"}
+        )
 
-        self.fields["fullname"].widget.attrs.update({"class": "form-control", "placeholder": "Введите ФИО получателя"})
+        self.fields["fullname"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите ФИО получателя"}
+        )
 
         self.fields["comment"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите текст для получателя"}
@@ -28,7 +32,9 @@ class MessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
 
-        self.fields["topic"].widget.attrs.update({"class": "form-control", "placeholder": "Введите тему письма"})
+        self.fields["topic"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите тему письма"}
+        )
 
         self.fields["content"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите содержимое письма"}
@@ -75,7 +81,9 @@ class MailingForm(forms.ModelForm):
         if self.user:
             self.fields["message"].queryset = Message.objects.filter(owner=self.user)
 
-            self.fields["recipients"].queryset = Recipient.objects.filter(owner=self.user)
+            self.fields["recipients"].queryset = Recipient.objects.filter(
+                owner=self.user
+            )
 
     def clean_start_time(self):
         start_time = self.cleaned_data.get("start_time")
@@ -96,6 +104,8 @@ class MailingForm(forms.ModelForm):
             return end_time
 
         if start_time >= end_time:
-            raise forms.ValidationError("Дата и время окончания должны быть позже даты и времени начала.")
+            raise forms.ValidationError(
+                "Дата и время окончания должны быть позже даты и времени начала."
+            )
 
         return end_time
